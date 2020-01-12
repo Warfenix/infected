@@ -60,6 +60,19 @@ local translations = {
 		vamp = "<R>Vampir oldunuz. Boşluk tuşuna basarak uçun ve tüm fareleri yakalayın!",
 		teleport_skill = "<R>Işınlanmak için! <VI><B>Haritaya tıklayın</B>",
 		garlic_skill = "<FC>Sarımsak atmak için! <V><B>Boşluk tuşuna basın</B>"
+    },
+	he = {
+		greeting = "<R>אוי לא, כולם הופכים להיות <VI><B>#infected</B><R>! רוצו! <font size='11'>!help בשביל מידע</font>\n<VI>הגישו מפות ב- <CH2>https://atelier801.com/topic?f=6&t=882003</CH2>\n\tדווחו על בעיות אל Bolodefchoco#0000\n\tשרת דיסקורד: <CH2>https://discord.gg/quch83R</CH2>",
+		mice_win_1 = "<V>%s <FC>שרדו את המגפה וקיבל נקודה!",
+		mice_win_2 = "<FC>כל העכברים שרדו את המגפה וקיבלו נקודה!",
+		vamp_win = "<R>כל הערפדים הדביקו את העכברים וקיבלו נקודה!",
+		invalid_map = "<VI>אתם לא יכולים לטעון מפה זאת במודול הזה.",
+		round_winner = "<%s>%s <%s>ניצחו את הסיבוב!",
+		help = "<R>ברוכים הבאים אל <VI><B>#infected</B><R>! הגרסה החדשה של המודול פותחה על ידי <BV>Bolodefchoco#0000</B>.\n<font size='11'>\t<BL>- כל סיבוב ערפד ייבחר באקראיות!</BL>\n\t<G>- בתור ערפד, לחצו רווח בכדי לעוף ותפסו את כל העכברים. אתם תנצחו כשכולם יידבקו.</G>\n\t<BL>- בתור עכבר, לחצו רווח על מנת לדחוף שחקנים אחרים עם מיפ! וברחו מהערפדים. אתם תנצחו כשכל הערפדים מתים או כשאתם השורדים האחרונים.</BL>\n\t<G>- אתם תנצחו את הסיבוב כאשר תשיגו <B>5</B> נקודות. שם המנצחים יהיה בצבע שונה.</G>\n\t<BL>- מנצחי הסיבוב יכולים לזרוק שומים כשהאייקון מופיע. (הפעילו על ידי לחיצה על האייקון)</BL>\n\t<G>- ערפדי האלפא יכולים להשתגר במפה כשהאייקון מופיע. (הפעילו על ידי לחיצה על האייקון)</G></font>",
+		new_game = "<ROSE><font size='11'>משחק חדש יתחיל בעוד %d שניות</font>",
+		vamp = "<R>אתם ערפד עכשיו. לחצו על מקש הרווח בכדי לעוף ולתפוס את העכברים!",
+		teleport_skill = "<VI><B>לחצו על המפה</B> <R>בכדי להשתגר",
+		garlic_skill = "<V><B>לחצו רווח</B> <FC>בכדי לזרוק שום!"
 	},
 }
 local translate = translations[tfm.get.room.community] or translations.en
