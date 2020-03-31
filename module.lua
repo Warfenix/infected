@@ -60,7 +60,7 @@ local translations = {
 		vamp = "<R>Vampir oldunuz. Boşluk tuşuna basarak uçun ve tüm fareleri yakalayın!",
 		teleport_skill = "<R>Işınlanmak için! <VI><B>Haritaya tıklayın</B>",
 		garlic_skill = "<FC>Sarımsak atmak için! <V><B>Boşluk tuşuna basın</B>"
-    },
+	},
 	he = {
 		greeting = "<R>אוי לא, כולם הופכים להיות <VI><B>#infected</B><R>! רוצו! <font size='11'>!help בשביל מידע</font>\n<VI>הגישו מפות ב- <CH2>https://atelier801.com/topic?f=6&t=882003</CH2>\n\tדווחו על בעיות אל Bolodefchoco#0000\n\tשרת דיסקורד: <CH2>https://discord.gg/quch83R</CH2>",
 		mice_win_1 = "<V>%s <FC>שרדו את המגפה וקיבל נקודה!",
@@ -165,7 +165,7 @@ eventPlayerVampire = function(playerName, vampire)
 	if not vampire then
 		alphaVampires[playerName] = true
 		alphaVampires[#alphaVampires + 1] = playerName
-	
+
 		local author = tfm.get.room.xmlMapInfo and tfm.get.room.xmlMapInfo.author or "?"
 		ui.setMapName("<J>" .. author .. " <BL>- " .. tfm.get.room.currentMap .. "   <G>|   <N>Alpha : <font size='11'><R>" .. table.concat(alphaVampires, ", ") .. "</R></font>")
 	end
@@ -330,7 +330,7 @@ eventLoop = function(currentTime, remainingTime)
 				end
 
 				lastRoundWinners = roundWinner
-				
+
 				tfm.exec.chatMessage(string.format(translate.round_winner, (vampWin and 'R' or "FC"), table.concat(roundWinner, ", "), (vampWin and "VI" or "ROSE")))
 			end
 		end
@@ -420,18 +420,19 @@ end
 eventMouse = function(playerName, x, y)
 	system.bindMouse(playerName, false)
 	if not alphaVampires[playerName] then return end
-	
+
 	tfm.exec.movePlayer(playerName, x, y)
 	local playerData = tfm.get.room.playerList[playerName]
 	for i = -5, 5 do
 		tfm.exec.displayParticle(3, playerData.x + (i * 2), playerData.y, math.random(10, 20) / 10 * table.random({ -1, 1 }), -math.random(10, 20) / 10)
 	end
-	tfm.exec.displayParticle(37, x, y)	
+	tfm.exec.displayParticle(37, x, y)
 end
 
 system.disableChatCommandDisplay()
 tfm.exec.disableAutoNewGame()
 tfm.exec.disableAutoTimeLeft()
 tfm.exec.disableAutoScore()
+tfm.exec.disablePhysicalConsumables()
 
 eventLoop(0, 0)
