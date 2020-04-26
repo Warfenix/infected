@@ -151,6 +151,9 @@ eventPlayerDied = function(playerName)
 end
 
 local started -- nil : new game, didn't start ; true : started ; false : current game, finished
+local nextMap
+local stop -- stop new map
+local vampireTimer, autoVampire = 0 -- whether the map will spawn the vampires automatically
 
 local vampData = { }
 
@@ -227,7 +230,11 @@ end
 local timer = 0
 local isTribeHouse = string.byte(tfm.get.room.name, 2) == 3
 eventNewGame = function()
-	if isTribeHouse and (not tfm.get.room.xmlMapInfo or (tfm.get.room.xmlMapInfo.permCode ~= 11 and tfm.get.room.xmlMapInfo.permCode ~= 21)) then
+	nextMap = nil
+
+	autoVampire = (tfm.get.room.xmlMapInfo.permCode == 11 or tfm.get.room.xmlMapInfo.permCode == 21)
+	vampireTimer = autoVampire and 0 or 5
+	if isTribeHouse and (not tfm.get.room.xmlMapInfo or not autoVampire) then
 		players._alive._count = 0
 		tfm.exec.chatMessage(translate.invalid_map)
 		return
@@ -270,6 +277,21 @@ eventLoop = function(currentTime, remainingTime)
 
 	if newGameTimer then
 		newGameTimer = newGameTimer - .5
+	end
+
+	if vampireTimer > 0 then
+		vampireTimer = vampireTimer - .5
+		if vampireTimer == 0 then
+			local check = 0
+			local vampires = { table.random(players._alive) }
+			repeat
+				check = check + 1
+				vampires[2] = table.random(players._alive)
+			until vampires[2] ~= vampires[1] or check > 5
+
+			tfm.exec.setVampirePlayer(vampires[1])
+			tfm.exec.setVampirePlayer(vampires[2])
+		end
 	end
 
 	if started then
@@ -373,9 +395,9 @@ eventLoop = function(currentTime, remainingTime)
 		newGameTimer = module.wait_time
 	end
 
-	if remainingTime < 500 or (newGameTimer and newGameTimer < .5) then
+	if not stop and (remainingTime < 500 or (newGameTimer and newGameTimer < .5)) then
 		ui.removeTextArea(0)
-		tfm.exec.newGame("#" .. math.random(1, 2) .. "1")
+		tfm.exec.newGame(nextMap or "#" .. math.random(1, 2) .. "1")
 	end
 end
 
@@ -398,6 +420,12 @@ eventChatCommand = function(playerName, command)
 		elseif onReviewMode then
 			if cmd == "np" and param then
 				tfm.exec.newGame(param)
+			elseif cmd == "npp" and param then
+				nextMap = param
+				tfm.exec.chatMessage("<VI>Next map is going to be '" .. param .. "'.", playerName)
+			elseif cmd == "stop" then
+				stop = not stop
+				tfm.exec.chatMessage("<VI><B>[#infected]</B> New Map: " .. tostring(not stop), nil, true)
 			end
 		end
 	end
