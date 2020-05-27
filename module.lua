@@ -298,6 +298,8 @@ eventLoop = function(currentTime, remainingTime)
 		local roundWinner, counter, vampWin = { }, 0, false
 
 		if timer % 1 == 0 then
+			local iterOver
+
 			if players._alive._count == 0 then
 				started = false
 
@@ -314,6 +316,7 @@ eventLoop = function(currentTime, remainingTime)
 					end
 				end
 
+				iterOver = players._vampire
 				if players.__roundTotal > 3 then
 					lastMapWinners = { }
 					tfm.exec.chatMessage(translate.vamp_win)
@@ -331,6 +334,7 @@ eventLoop = function(currentTime, remainingTime)
 					end
 				end
 
+				iterOver = players._alive
 				if players.__roundTotal > 3 then
 					lastMapWinners = { }
 					for i = 1, module.garlic_winners do
@@ -343,6 +347,13 @@ eventLoop = function(currentTime, remainingTime)
 					else
 						tfm.exec.chatMessage(translate.mice_win_2)
 					end
+				end
+			end
+
+			if iterOver then
+				for i = 1, iterOver._count do
+					tfm.exec.giveCheese(iterOver[i])
+					tfm.exec.playerVictory(iterOver[i])
 				end
 			end
 
