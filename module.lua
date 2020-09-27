@@ -350,7 +350,7 @@ eventLoop = function(currentTime, remainingTime)
 				end
 			end
 
-			if iterOver then
+			if iterOver and not stop then
 				for i = 1, iterOver._count do
 					tfm.exec.giveCheese(iterOver[i])
 					tfm.exec.playerVictory(iterOver[i])
